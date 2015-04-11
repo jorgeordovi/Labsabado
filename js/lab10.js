@@ -142,6 +142,57 @@ function Validate(){};
     }
 
 
+     $('#radios').find(':radio').each(function(){
+      if($(this).is(':checked')){
+        count++;
+        localStorage.setItem('paymode', $(this).val());
+      }
+    });
+    if(count==0){
+      $('.pay-error').css({'margin-left':50}).show();
+      $('.pay-error').text('Debe seleccionar un modo de Pago');
+    }
+    else{
+      $('.pay-error').hide();
+    }
+
+
+    var count=$('select option:selected').val();
+    if(count=="0"){
+      $('.city-error').show();
+      $('.city-error').text('¡Debe seleccionar una Ciudad!');
+    }
+    else{
+      $('.city-error').hide();
+      localStorage.setItem('city', count);
+      $('#buttons').append(
+        '<a id="info" href="#openModal">Ver Pedido</a>'
+      );
+      $('.inputs').removeClass('error');
+      $('.inputs').addClass('success');
+    }
+    event.preventDefault();
+  });
+
+
+$(document).on('click', '#info', function(){
+
+    $('#openModal > div').append(
+      '<h2>Este es tu pedido</h2>' +
+      '<ul>' +
+      '<li>Su nombre es: ' + localStorage.getItem('username') + '</li>' +
+      '<li>Su documento es: ' + localStorage.getItem('nid') + '</li>' +
+      '<li>Su email es: ' + localStorage.getItem('email') + '</li>' +     
+      '<li id="listMeals">Los alimentos que Solicita son: <ul></ul></li>' + 
+      '<li>El modo de pago es: ' + localStorage.getItem('paymode') + '</li>' +  
+      '<li>La ciudad donde habita es: ' + localStorage.getItem('city') + '</li></ul>'  
+
+    );
+    var meals =  JSON.parse(localStorage.getItem('meals'));
+
+    $.each(meals, function(key, value){
+          $('#listMeals > ul').append('<li>El producto ' + key + ' cuesta $' + value + ' M/Cte</li>');
+    });
   });
 
 });

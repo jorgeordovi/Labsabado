@@ -29,10 +29,11 @@ function Validate(){};
   $('.pay-error').hide();
   $('.city-error').addClass('error');
   $('.city-error').hide();
-  $('#buttons #info').remove();
+  $('#info').remove();
  
 
   $('.button').bind('click', function(event){
+
 
   	var validate = new Validate();
 
@@ -176,6 +177,8 @@ function Validate(){};
 
 
 $(document).on('click', '#info', function(){
+
+	$('#openModal > div > h2, #openModal > div > ul').remove();
 
     $('#openModal > div').append(
       '<h2>Este es tu pedido</h2>' +
